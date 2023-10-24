@@ -1,0 +1,8 @@
+{
+    "configFile" : "<fullpath>/home-energy-demand-manager/webapp/config.json",
+    "smartPlugIP" : "yourSmartPlugIP",
+    "smartPlugUsername" : "yourUsername",
+    "smartPlugPass": "yourPass",
+    "amberToken": "yourAPItoken",
+    "logFile" : "/tmp/amber_service.log"
+}

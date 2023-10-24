@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gunicorn Service</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Add additional custom CSS styles as needed */
+        .slider-container {
+            padding: 20px;
+        }
+        .log-container {
+            padding: 20px;
+        }
+    </style>
+
+    <style>
+        /* Add CSS styles to increase slider size */
+        #thresholdPrice {
+            width: 50%; /* Adjust the width as needed */
+        }
+        .highlight {
+            background-color: yellow;
+            transition: background-color 1s;
+        }
+        #logContent {
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Set Threshold Price</h1>
+    <form id="thresholdForm" method="post" action="/save">
+        <label for="thresholdPrice">Threshold Price:</label>
+        <input type="range" id="thresholdPrice" name="thresholdPrice" min="0" max="100" step="1" value="{{ threshold_price }}">
+        <span id="thresholdValue">{{ threshold_price }}</span>
+        <br><br>
+        <input type="submit" value="Update Threshold Price">
+    </form>
+
+    <!-- Horizontal divider -->
+    <hr class="my-4">
+
+    <h2>Log File Content:</h2>
+    <pre id="logContent">{{ log_content }}</pre>
+        
+    
+    <script>
+        var thresholdSlider = document.getElementById("thresholdPrice");
+        var thresholdValue = document.getElementById("thresholdValue");
+
+        thresholdSlider.oninput = function() {
+            thresholdValue.innerHTML = this.value;
+        };
+
+        // Use jQuery to handle form submission
+        $('#thresholdForm').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            var formData = $(this).serialize(); // Serialize the form data
+
+            $.ajax({
+                url: '/save',
+                type: 'POST',
+                data: formData,
+                success: function(data) {
+                    // Highlight the new value for 10 seconds
+                    var newValue = parseInt($('#thresholdPrice').val());
+                    var message = `The value has been updated to ${newValue}`;
+                    $('#thresholdValue').addClass('highlight').text(newValue);
+                    setTimeout(function() {
+                        $('#thresholdValue').removeClass('highlight').text(newValue);
+                    }, 10000);
+
+                    // // Scroll to the bottom of the log content
+                    // var logContent = $('#logContent')[0];
+                    // logContent.scrollTop = logContent.scrollHeight;
+
+                    // Update the log content
+                    $('#logContent').text(data.log_content);
+
+                    // Call the query API when the "Save" button is clicked
+                    callQueryApi($('#thresholdPrice').val());
+                }
+            });
+        });
+
+        function callQueryApi(threshold) {
+            $.ajax({
+                url: '/query_api',  // New route to trigger the query_api function
+                type: 'POST',
+                data: { thresholdPrice: threshold },
+                success: function(data) {
+                    // Update the log content (if needed)
+                    updateLogContent();
+                },
+                error: function(data) {
+                    // Update the log content (if needed)
+                    updateLogContent();
+                }
+                
+            });
+        }
+
+        // Use jQuery to fetch and update log content
+        function updateLogContent() {
+            $.ajax({
+                url: '/get_log',
+                type: 'GET',
+                success: function(data) {
+                    $('#logContent').text(data.log_content);
+                }
+            });
+        }
+
+        // Call the updateLogContent function initially and set an interval to update it periodically
+        updateLogContent();
+        setInterval(updateLogContent, 600000); // Update every 10 min (adjust as needed)
+    </script>
+</body>
+</html>
