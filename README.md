@@ -82,3 +82,7 @@ And add the following line, making sure the path points to where the script is l
 @reboot sudo python3 <fullpath>/home-energy-demand-manager/amber_service.py
 @reboot cd <fullpath>/home-energy-demand-manager/webapp/ && sudo gunicorn -c gunicorn_config.py app:app
 ```
+
+# Explore Amber's API
+
+Check the [exploration python notebook](exploration.ipynb)
