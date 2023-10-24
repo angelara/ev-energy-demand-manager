@@ -12,7 +12,7 @@ from amberelectric.model.channel import ChannelType
 
 import logging
 
-settingsFile = pathlib.Path().resolve()+'/settings.json'
+settingsFile = str(pathlib.Path().resolve())+'/settings.json'
 
 def extractCurrentPriceByChannel( data, value = ChannelType.GENERAL, returnFirst = True  ):
     currentPrice = [d.per_kwh for d in data if d.channel_type == value]
@@ -139,5 +139,8 @@ def main_program():
 
 with daemon.DaemonContext():
      main_program()
+
+## if you want to run it without detaching the process from the terminal, 
+## comment the  2 lines above and uncomment the line below
 
 # main_program()
