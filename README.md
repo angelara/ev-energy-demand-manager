@@ -1,6 +1,6 @@
 You can deploy this codebase on a raspberry-pi and buy one of the smart-plugs available in your local hardware-store. We used a [TP-link tapo p110](https://www.bunnings.com.au/tp-link-tapo-p110-mini-energy-monitoring-smart-plug_p0367692), available in Bunnings.
 
-You will need to change your retailer to Ammber Electric to be able to use their API and be exposed to the electricity wholesale market price. Once you are set up as a costumer, you'll need to create a an [API Token](https://app.amber.com.au/developers/).
+You will need to change your retailer to Amber Electric to be able to use their API and be exposed to the electricity wholesale market price. Once you are set up as a costumer, you must create an [API Token](https://app.amber.com.au/developers/).
 
 
 # Setup 
@@ -29,7 +29,7 @@ sudo pip install python-daemon
 
 # Service
 
-Edit the setting.json file. It has the following variables needed to connect to your plug, and connect to Amber. 
+Edit the setting.json file. It has the following variables needed to connect to your plug and connect to Amber. 
 
 ```json
 {
@@ -42,7 +42,7 @@ Edit the setting.json file. It has the following variables needed to connect to 
 }
 ```
 
-The logFile will contain the result of each query to Amber's API, whether the smart plug has been switched off/on, and the threshold price has changed. This is an example of the log content:
+The logFile will contain the result of each query to Amber's API, whether the smart plug has been switched off/on, and whether the threshold price has changed. This is an example of the log content:
 
 ```bash
 2023-10-16 14:10:53,944 - INFO - NEM 2023-10-16 13:30 - Threshold 15 & current price is 9.08895 cents. The plug stateOn = True has not been changed
@@ -51,7 +51,7 @@ The logFile will contain the result of each query to Amber's API, whether the sm
 2023-10-16 14:37:48 - New Threshold has been set via the webapp with value 13
 ```
 
-The logfile will is located in the temporal folder, and will be removed everytime your system restarts. If you want a persistent logFile, change it to another folder.
+The logfile will be in the temporal folder and removed whenever your system restarts. If you want a persistent logFile, change it to another folder.
 
 
 To run the scheduled jobs every 10 minutes
@@ -76,7 +76,7 @@ To make sure the service runs when the raspberry pi starts, edit crontab as foll
 crontab -e
 ```
 
-And add the following line, making sure the path points to where the script is located
+Add the following line, making sure the path points to where the script is located.
 
 ```bash
 @reboot cd <fullpath>/home-energy-demand-manager/ && sudo python3 amber_service.py
