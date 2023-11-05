@@ -1,6 +1,4 @@
-You can deploy this codebase on a raspberry-pi and buy one of the smart-plugs available in your local hardware-store. We used a [TP-link tapo p110](https://www.bunnings.com.au/tp-link-tapo-p110-mini-energy-monitoring-smart-plug_p0367692), available in Bunnings.
-
-You will need to change your retailer to Amber Electric to be able to use their API and be exposed to the electricity wholesale market price. Once you are set up as a costumer, you must create an [API Token](https://app.amber.com.au/developers/).
+You can deploy this codebase on a Raspberry Pi. It works with the [Rasperry Pi Zero](https://www.raspberrypi.com/products/raspberry-pi-zero-w/), which is the less expensive version, up to the latest one. The next task is to get one of the smart-plugs available in your local hardware-store. We used a [TP-link tapo p110](https://www.bunnings.com.au/tp-link-tapo-p110-mini-energy-monitoring-smart-plug_p0367692), available in Bunnings. Finally, perhaps most importantly, you will need to change your retailer to Amber Electric to be able to use their API and be exposed to the electricity wholesale market price. Once you are set up as a customer, you must create an [API Token](https://app.amber.com.au/developers/).
 
 
 # Setup 
