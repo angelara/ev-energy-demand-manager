@@ -44,21 +44,6 @@ def query_api(logger):
     #Creates a P100 plug object
     p110 = PyP110.P110( dataSettings['smartPlugIP'], dataSettings['smartPlugUsername'], dataSettings['smartPlugPass']) 
 
-    #If connection fails, retry every 30 seconds
-    p110Connected = False
-    while p110Connected is False:
-        try:
-            #Creates the cookies required for further methods
-            p110.handshake() 
-
-            #Sends credentials to the plug and creates AES Key and IV for further methods
-            p110.login()
-            
-            p110Connected = True
-        except Exception as e:
-            logger.error("\t Exception: Failed on Handshake/login %s\n" % e)
-            time.sleep(30)
-
     # Insert the API token you created at https://app.amber.com.au/developers
     configuration = amberelectric.Configuration(
         access_token = dataSettings['amberToken']
@@ -85,7 +70,7 @@ def query_api(logger):
 
     try:
         # Turn on/off the plug based on the current price and the state of the plug
-        plugIsOn = p110.getDeviceInfo()["result"]["device_on"]
+        plugIsOn = p110.getDeviceInfo()["device_on"]
 
         if currentPriceDataGeneral.per_kwh > thresholdPrice and plugIsOn:
             p110.turnOff()

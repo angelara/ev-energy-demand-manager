@@ -10,7 +10,7 @@ install the following libraries
 ```bash
 sudo apt-get install libatlas-base-dev
 pip install Flask gunicorn
-pip install PyP100
+pip install git+https://github.com/almottier/TapoP100.git@main
 pip install amberelectric
 pip install matplotlib
 pip install python-daemon
@@ -21,7 +21,7 @@ Install the following libraries as a superuser to allow the code to be initiated
 
 ```bash
 sudo pip install Flask gunicorn
-sudo pip install PyP100
+sudo pip install git+https://github.com/almottier/TapoP100.git@main
 sudo pip install amberelectric
 sudo pip install schedule
 sudo pip install python-daemon
